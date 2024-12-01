@@ -60,6 +60,17 @@ class jhirobox{
 		catch(Exception error)
 		{
 			//System.out.println("null pointer");
+		
+
 		}
+
 	}
+
+	private void wget(String path){
+	}
+
+
+
+
+
 }
