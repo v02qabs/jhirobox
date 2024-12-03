@@ -7,7 +7,7 @@ public class SimpleClient {
 	private String GMessage(){
 		//String message
 		try{
-			BufferedReader br = new BufferedReader(new FileReader(new File("/root/.ssh/authorized_keys")));
+			BufferedReader br = new BufferedReader(new FileReader(new File("/home/takesue090/.ssh/authorized_keys")));
 			String line = br.readLine();
 			message = line;
 			return message;
