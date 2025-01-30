@@ -1,4 +1,5 @@
 import java.io.*;
+import java.lang.*;
 
 class jhirobox{
 	public jhirobox(String app_name, String paramater){
@@ -14,6 +15,11 @@ class jhirobox{
 				System.out.println(list_dir[i]);
 			}
 	}
+	private void ipAdd(){
+		new ipAdd().ipAdd();
+	}
+
+
 	private void cat(String fname){
 		System.out.println("open filename ; " + fname);
 		String line = null;
@@ -43,10 +49,11 @@ class jhirobox{
 			System.out.println("cat " + para);
 			cat(para);
 		}
-		else{
-			System.out.println("no app.");
+		else if(app.equals("ipAdd")){
+		ipAdd();
 		}
 	}
+
 	public static void main(String[] args)
 	{
 		System.out.println("hello jhirobox");
