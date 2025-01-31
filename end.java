@@ -12,8 +12,9 @@ public class end{
             List<String> lines = Files.readAllLines(Paths.get(inputFile));
 
             List<String> modifiedLines = lines.stream()
-                .map(line -> args[2] + " -i " + line + line +  args[3])
+                .map(line -> args[2] + " -i " + "\'" + line + "\'" + " \'" + line + "\'" + args[3])
                 .collect(Collectors.toList());
+
 
 
 

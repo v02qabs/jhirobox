@@ -10,6 +10,7 @@ end.jar
 end.java
 end_start.class
 end_start.jar
+end_start.java
 ipAdd.class
 ipAdd.java
 item.txt
@@ -18,6 +19,9 @@ jhirobox.java
 log
 makefile
 manifest.txt
+out
+out2
+out5
 output.txt
 parttern.class
 pattern.class
