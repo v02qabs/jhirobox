@@ -1,24 +1,28 @@
-ffmpegDownloadsHtml.java-i DownloadsHtml.java mp3
-ffmpegHIROBOX-i HIROBOX mp3
-ffmpegMETA-INF-i META-INF mp3
-ffmpegSimpleClient.class-i SimpleClient.class mp3
-ffmpegSimpleClient.java-i SimpleClient.java mp3
-ffmpegSimpleServer.class-i SimpleServer.class mp3
-ffmpegSimpleServer.java-i SimpleServer.java mp3
-ffmpegend.class-i end.class mp3
-ffmpegend.jar-i end.jar mp3
-ffmpegend.java-i end.java mp3
-ffmpegend_start.class-i end_start.class mp3
-ffmpegend_start.jar-i end_start.jar mp3
-ffmpegipAdd.class-i ipAdd.class mp3
-ffmpegipAdd.java-i ipAdd.java mp3
-ffmpegitem.txt-i item.txt mp3
-ffmpegjhirobox.class-i jhirobox.class mp3
-ffmpegjhirobox.java-i jhirobox.java mp3
-ffmpeglog-i log mp3
-ffmpegmakefile-i makefile mp3
-ffmpegmanifest.txt-i manifest.txt mp3
-ffmpegoutput.txt-i output.txt mp3
-ffmpegparttern.class-i parttern.class mp3
-ffmpegpattern.class-i pattern.class mp3
-ffmpegpattern.java-i pattern.java mp3
+ffmpeg -i 'DownloadsHtml.java'  'DownloadsHtml.java'.mp3
+ffmpeg -i 'HIROBOX'  'HIROBOX'.mp3
+ffmpeg -i 'META-INF'  'META-INF'.mp3
+ffmpeg -i 'SimpleClient.class'  'SimpleClient.class'.mp3
+ffmpeg -i 'SimpleClient.java'  'SimpleClient.java'.mp3
+ffmpeg -i 'SimpleServer.class'  'SimpleServer.class'.mp3
+ffmpeg -i 'SimpleServer.java'  'SimpleServer.java'.mp3
+ffmpeg -i 'end.class'  'end.class'.mp3
+ffmpeg -i 'end.jar'  'end.jar'.mp3
+ffmpeg -i 'end.java'  'end.java'.mp3
+ffmpeg -i 'end_start.class'  'end_start.class'.mp3
+ffmpeg -i 'end_start.jar'  'end_start.jar'.mp3
+ffmpeg -i 'end_start.java'  'end_start.java'.mp3
+ffmpeg -i 'ipAdd.class'  'ipAdd.class'.mp3
+ffmpeg -i 'ipAdd.java'  'ipAdd.java'.mp3
+ffmpeg -i 'item.txt'  'item.txt'.mp3
+ffmpeg -i 'jhirobox.class'  'jhirobox.class'.mp3
+ffmpeg -i 'jhirobox.java'  'jhirobox.java'.mp3
+ffmpeg -i 'log'  'log'.mp3
+ffmpeg -i 'makefile'  'makefile'.mp3
+ffmpeg -i 'manifest.txt'  'manifest.txt'.mp3
+ffmpeg -i 'out'  'out'.mp3
+ffmpeg -i 'out2'  'out2'.mp3
+ffmpeg -i 'out5'  'out5'.mp3
+ffmpeg -i 'output.txt'  'output.txt'.mp3
+ffmpeg -i 'parttern.class'  'parttern.class'.mp3
+ffmpeg -i 'pattern.class'  'pattern.class'.mp3
+ffmpeg -i 'pattern.java'  'pattern.java'.mp3
