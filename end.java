@@ -3,7 +3,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class end_start{
+public class end{
     public static void main(String[] args) {
         String inputFile = args[0];  // 入力ファイル
         String outputFile = args[1]; // 出力ファイル
