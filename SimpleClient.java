@@ -27,7 +27,7 @@ public class SimpleClient {
         int port = 12345; // サーバーのポート番号
 
         try (Socket socket = new Socket(serverAddress, port)) {
-            System.out.println("サーバーに接続しました: " + serverAddress);
+            System.out.println("Server connected"  + serverAddress);
 
             // サーバーとのデータ送受信用のストリームを作成
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -37,11 +37,11 @@ public class SimpleClient {
             message = GMessage();
             out.println(message);
             
-            System.out.println("クライアントからのメッセージ: " + message);
+            System.out.println("Messsage : " + message);
             
             // サーバーからの応答を受信
             String response = in.readLine();
-            System.out.println("サーバーからの応答: " + response);
+            System.out.println("Response: " + response);
 
         } catch (IOException e) {
             e.printStackTrace();

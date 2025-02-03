@@ -10,14 +10,13 @@ public class SimpleServer {
 	}
 
     public void Server(){
-        int port = 12345; // サーバーのポート番号
+        int port = 12345; 
 
         try (ServerSocket serverSocket = new ServerSocket(port)) {
-            System.out.println("サーバーがポート " + port + " で起動しました...");
+            System.out.println("Server port "  + port + " establish");
 
-            // クライアントからの接続を待機
             Socket clientSocket = serverSocket.accept();
-            System.out.println("クライアントが接続しました: " + clientSocket.getInetAddress());
+            System.out.println("Connected " + clientSocket.getInetAddress());
 
             // クライアントとデータの送受信を開始
             BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
@@ -25,10 +24,10 @@ public class SimpleServer {
 
             // クライアントからのメッセージを受信
             message = in.readLine();
-            System.out.println("クライアントからのメッセージ: " + message);
+            System.out.println("Message" + message);
 
             // 応答をクライアントに送信
-            out.println("サーバーからの応答: " + message);
+            out.println("Res@pmse: " + message);
 
 
 		try{
