@@ -10,7 +10,7 @@ public class SimpleServer {
 	}
 
     public void Server(){
-        int port = 12345; 
+        int port = 2223; 
 
         try (ServerSocket serverSocket = new ServerSocket(port)) {
             System.out.println("Server port "  + port + " establish");

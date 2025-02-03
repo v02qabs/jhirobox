@@ -24,7 +24,7 @@ public class SimpleClient {
     public void SimpleMessage()	{
 		
         String serverAddress = "127.0.0.1"; // 接続先サーバーのIPアドレス
-        int port = 12345; // サーバーのポート番号
+        int port = 2223; // サーバーのポート番号
 
         try (Socket socket = new Socket(serverAddress, port)) {
             System.out.println("Server connected"  + serverAddress);
