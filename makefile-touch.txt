@@ -1,2 +1,5 @@
+exejava: 
+	java -cp ./commons-io.jar: touch
+
 install:
-	javac -cp ./commons-io.jar: ./touch.java 
+	javac -cp ./commons-io.jar: touch.java
