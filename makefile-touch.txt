@@ -1,0 +1,2 @@
+install:
+	javac -cp ./commons-io.jar: ./touch.java 
