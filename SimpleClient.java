@@ -1,55 +1,32 @@
 import java.io.*;
 import java.net.*;
-import java.util.*;
-
 public class SimpleClient {
-	String message;
-	private String GMessage(){
-		//String message
-		try{
-			BufferedReader br = new BufferedReader(new FileReader(new File("/home/takesue090/.ssh/authorized_keys")));
-			String line = br.readLine();
-			message = line;
-			return message;
-		}
-		catch(Exception error){
-			
-		}
-		
-		
-		
-		return message;
+  public static void main(String[] args) {
+  	
+    // クライアントソケットを生成
+    	String hostname = args[0];
+    	
+	new SimpleClient(hostname);
 	}
-
-    public void SimpleMessage()	{
-		
-        String serverAddress = "127.0.0.1"; // 接続先サーバーのIPアドレス
-        int port = 2223; // サーバーのポート番号
-
-        try (Socket socket = new Socket(serverAddress, port)) {
-            System.out.println("Server connected"  + serverAddress);
-
-            // サーバーとのデータ送受信用のストリームを作成
-            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-
-            // サーバーにメッセージを送信
-            message = GMessage();
-            out.println(message);
-            
-            System.out.println("Messsage : " + message);
-            
-            // サーバーからの応答を受信
-            String response = in.readLine();
-            System.out.println("Response: " + response);
-
-        } catch (IOException e) {
-            e.printStackTrace();
+	public SimpleClient(String hostname){
+	    
+    try (Socket socket = new Socket(hostname, 10000);
+        PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        // キーボード入力用のリーダーの作成
+        BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in))) {
+      // 「exit」を入力するまで繰り返し
+      while (true) {
+        System.out.print("IN>");
+        String input = keyboard.readLine();
+        writer.println(input);
+        if (input.equals("exit")) {
+          break;
         }
-    
+        System.out.println("[サーバーからの応答]" + reader.readLine());
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
     }
-    public static void main(String[] args){
-			new SimpleClient().SimpleMessage();
-		}
-		
+  }
 }

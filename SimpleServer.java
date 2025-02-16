@@ -1,49 +1,57 @@
 import java.io.*;
 import java.net.*;
-
 public class SimpleServer {
-
-	String message;
-	public static void main(String[] args){
-		System.out.println("Hello Server");
-		new SimpleServer().Server();
-	}
-
-    public void Server(){
-        int port = 2223; 
-
-        try (ServerSocket serverSocket = new ServerSocket(port)) {
-            System.out.println("Server port "  + port + " establish");
-
-            Socket clientSocket = serverSocket.accept();
-            System.out.println("Connected " + clientSocket.getInetAddress());
-
-            // クライアントとデータの送受信を開始
-            BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-            PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
-
-            // クライアントからのメッセージを受信
-            message = in.readLine();
-            System.out.println("Message" + message);
-
-            // 応答をクライアントに送信
-            out.println("Res@pmse: " + message);
-
-
-		try{
-			BufferedWriter bw = new BufferedWriter(new FileWriter(new File("~/.ssh/authroized_keys")));
-			bw.write(message);
-		}
-		catch(Exception error){
-			System.out.println("writting error");
-		}
-
-
-
-            // 接続を閉じる
-            clientSocket.close();
-        } catch (IOException e) {
+  public static void main(String[] args) {
+    // -----------------------------------------
+    // 1.TCPポートを指定してサーバソケットを作成
+    // -----------------------------------------
+    try (ServerSocket server = new ServerSocket(10000)) {
+      while (true) {
+        try {
+          // -----------------------------------------
+          // 2.クライアントからの接続を待ち受け（accept）
+          // -----------------------------------------
+          Socket sc = server.accept();
+          System.out.println("クライアントからの接続がありました。");
+          BufferedReader reader = null;
+          PrintWriter writer = null;
+          // -----------------------------------------
+          // 3.クライアントからの接続ごとにスレッドで通信処理を実行
+          // -----------------------------------------
+          try {
+            // クライアントからの受取用
+            reader = new BufferedReader(new InputStreamReader(sc.getInputStream()));
+            // サーバーからクライアントへの送信用
+            writer = new PrintWriter(sc.getOutputStream(), true);
+            // クライアントから「exit」が入力されるまで無限ループ
+            String line = null;
+            while (true) {
+              // クライアントから送信されたメッセージを取得
+              line = reader.readLine();
+              if (line.equals("exit")) {
+                break;
+              }
+              System.out.println("クライアントからのメッセージ＝" + line);
+              writer.println("Please input:");              
+            }
+          } catch (Exception e) {
             e.printStackTrace();
+          } finally {
+            // リソースの解放
+            if (reader != null)
+              reader.close();
+            if (writer != null)
+              writer.close();
+            if (sc != null)
+              sc.close();
+          }
+        } catch (Exception ex) {
+          ex.printStackTrace();
+          break;
         }
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
     }
+  }
 }

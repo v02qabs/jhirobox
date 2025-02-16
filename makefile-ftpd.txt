@@ -1,0 +1,2 @@
+install:
+    javac -cp ./libs/ftpserver.jar: ftpServer.java
