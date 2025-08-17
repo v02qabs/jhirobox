@@ -1,9 +1,15 @@
 ffmpeg -i DownloadsHtml.java.mp3
 ffmpeg -i HIROBOX.mp3
+ffmpeg -i META-INF.mp3
 ffmpeg -i SimpleClient.class.mp3
 ffmpeg -i SimpleClient.java.mp3
 ffmpeg -i SimpleServer.class.mp3
 ffmpeg -i SimpleServer.java.mp3
+ffmpeg -i end.class.mp3
+ffmpeg -i end.jar.mp3
+ffmpeg -i end.java.mp3
+ffmpeg -i end_start.class.mp3
+ffmpeg -i end_start.jar.mp3
 ffmpeg -i end_start.java.mp3
 ffmpeg -i ipAdd.class.mp3
 ffmpeg -i ipAdd.java.mp3
@@ -12,6 +18,11 @@ ffmpeg -i jhirobox.class.mp3
 ffmpeg -i jhirobox.java.mp3
 ffmpeg -i log.mp3
 ffmpeg -i makefile.mp3
+ffmpeg -i manifest.txt.mp3
+ffmpeg -i out.mp3
+ffmpeg -i out2.mp3
+ffmpeg -i out5.mp3
+ffmpeg -i output.txt.mp3
 ffmpeg -i parttern.class.mp3
 ffmpeg -i pattern.class.mp3
 ffmpeg -i pattern.java.mp3
