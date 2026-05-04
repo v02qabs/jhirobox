@@ -16,23 +16,30 @@ public class GeminiFxApp extends Application {
     private TextArea outputArea;
     private TextField inputField;
 
+    // APIキーは環境変数から取得するようにしてセキュリティを向上
+    // SliTaz等のターミナルで export GEMINI_API_KEY='あなたのキー' を実行しておいてください
+    private static final String API_KEY = System.getenv("GEMINI_API_KEY");
+
     @Override
     public void start(Stage primaryStage) {
-        primaryStage.setTitle("Gemini AI Client (JavaFX 8)");
+        primaryStage.setTitle("Gemini AI JavaFX (Pay-as-you-go Mode)");
 
-        // UIコンポーネント
+        // 1. UIコンポーネントの初期化
         outputArea = new TextArea();
         outputArea.setEditable(false);
         outputArea.setWrapText(true);
+        outputArea.setStyle("-fx-font-family: 'Monospace';"); // 出力を見やすく
 
         inputField = new TextField();
-        inputField.setPromptText("質問を入力してください...");
+        inputField.setPromptText("質問を入力してEnter...");
         
         Button sendButton = new Button("送信");
-        sendButton.setOnAction(e -> handleSend());
-        inputField.setOnAction(e -> handleSend()); // Enterキーでも送信
 
-        // レイアウト
+        // 2. イベントハンドラ
+        sendButton.setOnAction(e -> handleSend());
+        inputField.setOnAction(e -> handleSend());
+
+        // 3. レイアウト
         HBox inputBox = new HBox(5, inputField, sendButton);
         HBox.setHgrow(inputField, Priority.ALWAYS);
 
@@ -40,43 +47,70 @@ public class GeminiFxApp extends Application {
         root.setCenter(outputArea);
         root.setBottom(inputBox);
 
-        Scene scene = new Scene(root, 600, 400);
+        // 4. シーン設定
+        Scene scene = new Scene(root, 700, 500);
         primaryStage.setScene(scene);
         primaryStage.show();
+
+        // APIキーのチェック
+        if (API_KEY == null || API_KEY.isEmpty()) {
+            outputArea.setText("エラー: 環境変数 GEMINI_API_KEY が設定されていません。\n" +
+                               "export GEMINI_API_KEY='your_key' を実行してください。");
+        }
     }
 
     private void handleSend() {
         String prompt = inputField.getText().trim();
-        if (prompt.isEmpty()) return;
+        if (prompt.isEmpty() || API_KEY == null) return;
 
-        outputArea.appendText("You: " + prompt + "\n");
+        outputArea.appendText("User: " + prompt + "\n");
         inputField.clear();
 
-        // API呼び出しを別スレッドで実行（UIスレッドをブロックしない）
+        // UIスレッドをブロックしないように別スレッドで実行
         new Thread(() -> {
             String response = callGeminiApi(prompt);
-            Platform.runLater(() -> outputArea.appendText("Gemini: " + response + "\n\n"));
+            Platform.runLater(() -> {
+                outputArea.appendText("Gemini: " + response + "\n");
+                outputArea.appendText("--------------------------------------------------\n");
+            });
         }).start();
     }
 
     private String callGeminiApi(String prompt) {
-        String apiKey = "AIzaSyDt-t0nOUXKVyVN078VTNL1sgo4PJfnQLY";
-        String url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=" + apiKey;
+        // 有料プランでもエンドポイントは基本同じですが、モデル名を最新にできます
+        String url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=" + API_KEY;
         
-        // 簡単なJSON生成（実際には記号のエスケープが必要）
-        String jsonData = "{ \"contents\": [{ \"parts\":[{ \"text\": \"" + prompt + "\" }] }] }";
+        // 【修正の核心】JSON内で問題を起こす文字（" や \）をエスケープ
+        String escapedPrompt = prompt.replace("\\", "\\\\").replace("\"", "\\\"");
+
+        // 有料プランに対応したJSON構造
+        String jsonData = "{"
+            + "\"contents\": [{"
+            + "  \"parts\": [{"
+            + "    \"text\": \"" + escapedPrompt + "\""
+            + "  }]"
+            + "}]"
+            + "}";
 
         try {
+            // curlを使用してAPIリクエスト
             ProcessBuilder pb = new ProcessBuilder("curl", "-s", "-X", "POST", url,
                     "-H", "Content-Type: application/json",
                     "-d", jsonData);
             
             Process process = pb.start();
+            
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
-                return reader.lines().collect(Collectors.joining("\n"));
+                String result = reader.lines().collect(Collectors.joining("\n"));
+                
+                // エラー応答かどうかの簡易チェック
+                if (result.contains("\"error\"")) {
+                    return "API Error: \n" + result;
+                }
+                return result;
             }
         } catch (Exception e) {
-            return "エラーが発生しました: " + e.getMessage();
+            return "Execution Error: " + e.getMessage();
         }
     }
 
